@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1930">
+  <title>TJ Digital | Gestão Processual Demonstrativa</title>
+  <meta name="description" content="Sistema fictício de gestão processual para demonstração de arquitetura ASP.NET Core e Entity Framework Core.">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#dashboard" aria-label="TJ Digital, ir ao painel">
+        <span class="brand-mark" aria-hidden="true">TJ<span>.</span></span>
+        <span class="brand-copy"><strong>TJ Digital</strong><small>Plataforma demonstrativa</small></span>
+      </a>
+      <div class="side-label">ÁREA DE TRABALHO</div>
+      <nav class="menu" aria-label="Navegação principal">
+        <button type="button" class="nav-item active" data-page="dashboard"><span class="ico">▦</span> Visão geral</button>
+        <button type="button" class="nav-item" data-page="processos"><span class="ico">▤</span> Processos</button>
+        <button type="button" class="nav-item" data-page="audiencias"><span class="ico">▦</span> Audiências</button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="side-label">AMBIENTE</div>
+        <div class="environment"><span class="dot"></span> Demonstração local</div>
+        <p>Todos os nomes, números e registros são fictícios. Não há vinculação com órgãos do Poder Judiciário.</p>
+        <div class="version">ASP.NET Core 10 · EF Core 10</div>
+      </div>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="breadcrumb"><button id="mobileMenu" class="mobile-menu" type="button" aria-label="Abrir menu">☰</button><span>Plataforma /</span><strong id="breadcrumb">Visão geral</strong></div>
+        <div class="top-actions"><span class="env-chip"><span class="dot"></span> Ambiente de demonstração</span><span class="avatar" aria-label="Usuário demonstrativo">DE</span></div>
+      </header>
+
+      <main class="main-content" id="mainContent">
+        <section class="page" id="page-dashboard" aria-labelledby="dash-title">
+          <div class="page-heading"><div><div class="eyebrow">PAINEL DE CONTROLE</div><h1 id="dash-title">Visão geral</h1><p>Acompanhe os indicadores processuais do ambiente de demonstração.</p></div><button type="button" class="btn btn-primary" data-action="novo-processo">＋ Novo processo</button></div>
+          <div class="hero-banner"><div><div class="banner-kicker">AMBIENTE DE PORTFÓLIO</div><h2>Gestão processual mais clara,<br><em>do início ao encerramento.</em></h2><p>Uma simulação de fluxos judiciais com indicadores, movimentações e agenda, construída com .NET.</p></div><div class="hero-art" aria-hidden="true"><span>§</span></div></div>
+          <div id="stats" class="stats-grid" aria-live="polite"><div class="loading">Carregando indicadores…</div></div>
+          <div class="dashboard-grid">
+            <section class="panel"><div class="panel-title"><div><h2>Distribuição por classe</h2><p>Volume de processos por categoria</p></div><span class="panel-tag">Resumo</span></div><div id="classChart" class="chart-wrap"><div class="loading">Carregando…</div></div></section>
+            <section class="panel"><div class="panel-title"><div><h2>Últimas atualizações</h2><p>Processos movimentados recentemente</p></div><button type="button" class="link-btn" data-go="processos">Ver todos →</button></div><div id="recentProcesses" class="recent-list"><div class="loading">Carregando…</div></div></section>
+          </div>
+        </section>
+
+        <section class="page" id="page-processos" aria-labelledby="proc-title" hidden>
+          <div class="page-heading"><div><div class="eyebrow">ACOMPANHAMENTO</div><h1 id="proc-title">Processos judiciais</h1><p>Consulte, filtre e acompanhe os processos fictícios cadastrados.</p></div><button type="button" class="btn btn-primary" data-action="novo-processo">＋ Novo processo</button></div>
+          <div class="panel table-panel"><div class="table-header"><div class="filters"><label class="search-box"><span aria-hidden="true">⌕</span><input id="busca" type="search" placeholder="Pesquisar número, assunto ou comarca" aria-label="Pesquisar processos"></label><label><span class="sr-only">Filtrar por situação</span><select id="filtroStatus"><option value="">Todas as situações</option></select></label><label><span class="sr-only">Filtrar por classe</span><select id="filtroClasse"><option value="">Todas as classes</option></select></label></div><div id="totalRegistros" class="table-count"></div></div><div class="table-scroll"><table><thead><tr><th>PROCESSO</th><th>ASSUNTO</th><th>COMARCA</th><th>DISTRIBUIÇÃO</th><th>SITUAÇÃO</th><th></th></tr></thead><tbody id="processosRows"><tr><td colspan="6" class="loading">Carregando…</td></tr></tbody></table></div><div class="pagination"><span id="paginationInfo"></span><div class="pagination-buttons"><button class="btn btn-outline btn-small" id="prevPage" type="button">Anterior</button><button class="btn btn-outline btn-small" id="nextPage" type="button">Próximo</button></div></div></div>
+        </section>
+
+        <section class="page" id="page-audiencias" aria-labelledby="aud-title" hidden>
+          <div class="page-heading"><div><div class="eyebrow">AGENDA JUDICIÁRIA</div><h1 id="aud-title">Audiências</h1><p>Visualize os compromissos agendados no calendário simulado.</p></div><button type="button" class="btn btn-primary" data-action="nova-audiencia">＋ Agendar audiência</button></div>
+          <div class="panel"><div class="panel-title"><div><h2>Agenda de audiências</h2><p>Compromissos registrados em ambiente demonstrativo</p></div><select id="filtroAudiencia" aria-label="Filtrar audiências"><option value="">Todas</option><option value="Agendada">Agendadas</option><option value="Realizada">Realizadas</option><option value="Cancelada">Canceladas</option></select></div><div id="audienciasList" class="agenda-list"><div class="loading">Carregando…</div></div></div>
+        </section>
+      </main>
+      <footer class="main-footer">© 2026 TJ Digital · Projeto fictício de portfólio em .NET · Não é um sistema oficial</footer>
+    </div>
+  </div>
+
+  <dialog id="detailDialog" class="modal modal-large" aria-labelledby="detailTitle"><div class="modal-header"><div><div class="eyebrow">ACOMPANHAMENTO PROCESSUAL</div><h2 id="detailTitle">Detalhes do processo</h2></div><button class="close-dialog" type="button" data-close="detailDialog" aria-label="Fechar">×</button></div><div class="modal-body" id="detailContent"></div></dialog>
+
+  <dialog id="processDialog" class="modal" aria-labelledby="processTitle"><div class="modal-header"><div><div class="eyebrow">NOVO REGISTRO</div><h2 id="processTitle">Cadastrar processo</h2></div><button class="close-dialog" type="button" data-close="processDialog" aria-label="Fechar">×</button></div><form id="processForm" class="modal-body form-stack"><label>Classe processual <select name="classe" id="newClasse" required></select></label><label>Assunto <input name="assunto" required minlength="5" maxlength="180" placeholder="Ex.: Cobrança contratual"></label><div class="form-row"><label>Comarca <input name="comarca" required maxlength="80" placeholder="Comarca Modelo Central"></label><label>Vara <input name="vara" required maxlength="100" placeholder="1ª Vara Demonstrativa"></label></div><div class="form-row"><label>Parte autora <input name="autor" required maxlength="120" placeholder="Nome fictício"></label><label>Parte ré <input name="reu" required maxlength="120" placeholder="Nome fictício"></label></div><div class="form-hint">Utilize apenas informações fictícias. Nunca insira dados pessoais reais.</div><div class="form-actions"><button class="btn btn-outline" type="button" data-close="processDialog">Cancelar</button><button class="btn btn-primary" type="submit">Cadastrar processo</button></div></form></dialog>
+
+  <dialog id="audienciaDialog" class="modal" aria-labelledby="audienciaTitle"><div class="modal-header"><div><div class="eyebrow">AGENDA</div><h2 id="audienciaTitle">Agendar audiência</h2></div><button class="close-dialog" type="button" data-close="audienciaDialog" aria-label="Fechar">×</button></div><form id="audienciaForm" class="modal-body form-stack"><label>Processo <select name="processoId" id="audProcesso" required></select></label><div class="form-row"><label>Data e hora <input type="datetime-local" name="data" required></label><label>Tipo <select name="tipo" required><option>Conciliação</option><option>Instrução</option><option>Mediação</option></select></label></div><label>Sala ou ambiente <input name="sala" required maxlength="80" placeholder="Sala Virtual 1"></label><div class="form-actions"><button class="btn btn-outline" type="button" data-close="audienciaDialog">Cancelar</button><button class="btn btn-primary" type="submit">Agendar audiência</button></div></form></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

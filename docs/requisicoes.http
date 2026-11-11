@@ -1,0 +1,65 @@
+@baseUrl = http://localhost:5088
+
+### Health check
+GET {{baseUrl}}/api/health
+
+### Dashboard
+GET {{baseUrl}}/api/dashboard
+
+### Listar processos com filtros
+GET {{baseUrl}}/api/processos?busca=DEMO-2026-0001&status=Em%20andamento&page=1&pageSize=10
+
+### Detalhar processo
+GET {{baseUrl}}/api/processos/1
+
+### Criar processo
+POST {{baseUrl}}/api/processos
+Content-Type: application/json
+
+{
+  "classe": "Procedimento Comum Cível",
+  "assunto": "Cobrança de obrigação fictícia",
+  "comarca": "Comarca Modelo Central",
+  "vara": "1ª Vara Demonstrativa",
+  "autor": "Parte Autora de Exemplo",
+  "reu": "Parte Ré de Exemplo"
+}
+
+### Alterar situação processual
+PUT {{baseUrl}}/api/processos/1/status
+Content-Type: application/json
+
+{
+  "status": "Concluso"
+}
+
+### Registrar movimentação
+POST {{baseUrl}}/api/processos/1/movimentacoes
+Content-Type: application/json
+
+{
+  "descricao": "Movimentação fictícia adicionada para fins de demonstração.",
+  "responsavel": "Secretaria Simulada"
+}
+
+### Listar audiências
+GET {{baseUrl}}/api/audiencias
+
+### Criar audiência (ajuste a data para o futuro)
+POST {{baseUrl}}/api/audiencias
+Content-Type: application/json
+
+{
+  "processoId": 1,
+  "data": "2027-01-25T14:00:00Z",
+  "tipo": "Conciliação",
+  "sala": "Sala Virtual 1"
+}
+
+### Marcar audiência realizada
+PATCH {{baseUrl}}/api/audiencias/1/status
+Content-Type: application/json
+
+{
+  "status": "Realizada"
+}
